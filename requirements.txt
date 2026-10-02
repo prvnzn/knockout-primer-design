@@ -1,0 +1,4 @@
+# Runtime dependencies. Install with:  pip install -r requirements.txt
+biopython>=1.80      # genome/feature parsing and NCBI Entrez lookups
+primer3-py>=2.0      # primer design and thermodynamics
+pyyaml>=6.0          # the criteria config

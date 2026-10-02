@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 450" width="860" height="450" role="img"
+     aria-label="Schematic of the nested primer assay. In wild type the inner pair binds inside the gene ORF and the outer pair binds in the flanks either side. In the Keio deletion strain the ORF is replaced by a 1323 bp FRT-aphA1-FRT cassette, so the inner primers have no binding site, the outer pair gives a shifted product, and a control primer inside the cassette pairs with the outer primer in the matching flank.">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .hd   { font-size: 14px; font-weight: 600; fill: #2D2D2D; }
+    .t    { font-size: 12.5px; fill: #2D2D2D; }
+    .lbl  { font-size: 12px; font-weight: 600; fill: #2D2D2D; }
+    .sm   { font-size: 11px; fill: #6B6B6B; }
+    .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11.5px; fill: #6B6B6B; }
+    .onbar { font-size: 12px; font-weight: 600; fill: #FFFFFF; }
+    .oncass { font-size: 12px; font-weight: 600; fill: #2D2D2D; }
+    .flank { fill: #E8E8E8; stroke: #C9C9C9; }
+    .orf   { fill: #2E5C8A; }
+    .cass  { fill: #D4A03C; }
+    .inner { fill: #C4453C; }
+    .outer { fill: #2E5C8A; }
+    .ctrl  { fill: #4A9068; }
+    .rule  { stroke: #E4E4E4; stroke-width: 1; }
+    .dim   { stroke: #9A9A9A; stroke-width: 1; }
+    @media (prefers-color-scheme: dark) {
+      .hd, .t, .lbl { fill: #E8E8E8; }
+      .sm, .mono { fill: #A8A8A8; }
+      .flank { fill: #3A3A3A; stroke: #5A5A5A; }
+      .rule { stroke: #3A3A3A; }
+      .dim  { stroke: #8A8A8A; }
+    }
+  </style>
+
+  <!-- ═══════════════ wild type ═══════════════ -->
+  <text class="hd" x="0" y="16">Wild type (BW25113)</text>
+
+  <!-- outer primers: in the flanks, pointing inward. Labels sit beside the arrows. -->
+  <g class="outer">
+    <path d="M120 40 h34 l8 5 l-8 5 h-34 z"/>
+    <path d="M680 40 h-34 l-8 5 l8 5 h34 z"/>
+  </g>
+  <text class="lbl" x="114" y="49" text-anchor="end">O_F</text>
+  <text class="lbl" x="686" y="49">O_R</text>
+
+  <!-- the locus -->
+  <rect class="flank" x="0"   y="60" width="200" height="26" rx="2"/>
+  <rect class="orf"   x="200" y="60" width="400" height="26" rx="2"/>
+  <rect class="flank" x="600" y="60" width="200" height="26" rx="2"/>
+  <text class="onbar" x="400" y="78" text-anchor="middle">gene ORF</text>
+  <text class="sm" x="100" y="78" text-anchor="middle">upstream flank</text>
+  <text class="sm" x="700" y="78" text-anchor="middle">downstream flank</text>
+
+  <!-- inner primers: inside the ORF, pointing inward -->
+  <g class="inner">
+    <path d="M212 96 h34 l8 5 l-8 5 h-34 z"/>
+    <path d="M588 96 h-34 l-8 5 l8 5 h34 z"/>
+  </g>
+  <text class="lbl" x="206" y="105" text-anchor="end">I_F</text>
+  <text class="lbl" x="594" y="105">I_R</text>
+
+  <!-- products -->
+  <g class="dim">
+    <line x1="120" y1="126" x2="680" y2="126"/>
+    <line x1="120" y1="121" x2="120" y2="131"/><line x1="680" y1="121" x2="680" y2="131"/>
+    <line x1="212" y1="148" x2="588" y2="148"/>
+    <line x1="212" y1="143" x2="212" y2="153"/><line x1="588" y1="143" x2="588" y2="153"/>
+  </g>
+  <text class="t" x="692" y="130">outer product <tspan class="mono">M_wt</tspan></text>
+  <text class="t" x="600" y="152">inner product <tspan class="mono">M_inner</tspan></text>
+
+  <line class="rule" x1="0" y1="174" x2="860" y2="174"/>
+
+  <!-- ═══════════════ knockout ═══════════════ -->
+  <text class="hd" x="0" y="202">Keio deletion strain (Δgene::aphA1)</text>
+
+  <g class="outer">
+    <path d="M120 224 h34 l8 5 l-8 5 h-34 z"/>
+    <path d="M570 224 h-34 l-8 5 l8 5 h34 z"/>
+  </g>
+  <text class="lbl" x="114" y="233" text-anchor="end">O_F</text>
+  <text class="lbl" x="576" y="233">O_R</text>
+
+  <rect class="flank" x="0"   y="244" width="200" height="26" rx="2"/>
+  <rect class="cass"  x="200" y="244" width="290" height="26" rx="2"/>
+  <rect class="flank" x="490" y="244" width="200" height="26" rx="2"/>
+  <text class="sm" x="100" y="262" text-anchor="middle">upstream flank</text>
+  <text class="sm" x="590" y="262" text-anchor="middle">downstream flank</text>
+  <text class="oncass" x="345" y="262" text-anchor="middle">FRT–aphA1 (Kan&#8319;)–FRT · 1323 bp</text>
+
+  <!-- control primer: inside the cassette, reading outward toward the 5' junction -->
+  <g class="ctrl"><path d="M300 280 h-34 l-8 5 l8 5 h34 z"/></g>
+  <text class="lbl" x="306" y="289">kan-inner-F</text>
+  <text class="sm"  x="306" y="304">inside the cassette, reading outward</text>
+
+  <!-- the inner primers have nothing to bind -->
+  <text class="t" x="560" y="289" fill="#C4453C">I_F / I_R sites deleted → no inner product</text>
+
+  <g class="dim">
+    <line x1="120" y1="324" x2="570" y2="324"/>
+    <line x1="120" y1="319" x2="120" y2="329"/><line x1="570" y1="319" x2="570" y2="329"/>
+    <line x1="120" y1="346" x2="292" y2="346"/>
+    <line x1="120" y1="341" x2="120" y2="351"/><line x1="292" y1="341" x2="292" y2="351"/>
+  </g>
+  <text class="t" x="582" y="328">outer product <tspan class="mono">M_ko</tspan></text>
+  <text class="t" x="304" y="350">control product — knockout only</text>
+
+  <line class="rule" x1="0" y1="372" x2="860" y2="372"/>
+
+  <!-- ═══════════════ the read-out ═══════════════ -->
+  <text class="hd" x="0" y="398">What you read off the gel</text>
+  <text class="t" x="0" y="418">
+    <tspan class="lbl" fill="#C4453C">inner</tspan> band in wild type only
+    <tspan class="sm"> · </tspan>
+    <tspan class="lbl" fill="#2E5C8A">outer</tspan> band in both, shifted by
+    <tspan class="mono">M_ko − M_wt = 1323 − ORF length</tspan>
+    <tspan class="sm"> · </tspan>
+    <tspan class="lbl" fill="#4A9068">control</tspan> band in the knockout only
+  </text>
+  <text class="sm" x="0" y="438">
+    The flanks are identical in both strains, so they cancel: the shift depends only on the ORF length, never on where the outer primers sit.
+  </text>
+</svg>

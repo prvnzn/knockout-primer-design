@@ -1,0 +1,7 @@
+# One gene name per line. Lines starting with # are ignored.
+# Run:  knockout-primers examples/genes.txt --email you@example.com -o primers.csv
+hslV
+clpP
+lon
+degP
+pepQ

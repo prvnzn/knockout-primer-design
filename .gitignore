@@ -1,0 +1,26 @@
+# Cached reference genome (downloaded on first run, ~4.6 MB)
+cache/
+
+# Output
+*.csv
+!examples/*.csv
+primers.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Environments
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

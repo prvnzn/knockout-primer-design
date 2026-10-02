@@ -1,0 +1,67 @@
+# ============================================================
+#  Keio verification primers — design criteria
+#
+#  Every threshold the designer uses lives here; nothing is
+#  hard-coded. Copy this file, edit it, and pass it with
+#  --config my_criteria.yaml, or override single values on the
+#  command line with --set (e.g. --set primers.tm.opt=62).
+# ============================================================
+
+# --- Reference genome --------------------------------------------------------
+# The Keio parent is BW25113, which is not in the NCBI Gene database; the K-12
+# MG1655 reference is sequence-identical at these loci and is used for lookups.
+# The chromosome is downloaded once from NCBI and cached in `cache/`.
+reference:
+  organism:     "Escherichia coli str. K-12 substr. MG1655"
+  accession:    "NC_000913.3"
+  entrez_email: ""            # your e-mail — NCBI asks for one; set it or use --email
+  flank_bp:     700           # genomic context fetched each side of the ORF
+  # Map an input gene name onto the name NCBI knows, for synonyms and typos.
+  gene_aliases: {}            # e.g. {hofD: gspO, Tsp: prc}
+
+# --- Knockout cassette -------------------------------------------------------
+# In the Keio collection the ORF is replaced by FRT-aphA1(Kan^R)-FRT from pKD13.
+# `length_bp` is all the band arithmetic needs; `sequence_fasta` is only read for
+# the optional cassette (kanamycin) control.
+cassette:
+  name:            "aphA1 (FRT-kan-FRT, pKD13)"
+  length_bp:       1323
+  source:          "pKD13 AY048744.1, priming site 1 (30) -> priming site 4 (1353)"
+  sequence_fasta:  "FRT_aphA1_FRT_pKD13.fasta"   # relative to the config file
+
+# --- Primer quality criteria -------------------------------------------------
+# `accept_*` are the hard pass/fail bounds used to flag a primer; the optimiser
+# aims at the tighter opt/min/max window to get well-matched, robust pairs.
+primers:
+  length:   {min: 20, opt: 22, max: 30}
+  tm:       {min: 55, opt: 60, max: 68, max_pair_diff: 3.0,
+             accept_min: 50, accept_max: 72}
+  gc:       {min: 40, max: 60}
+  max_poly_x: 4               # longest run of one base allowed (AAAA = 4)
+  thermo:   {salt_monovalent_mM: 50, dna_conc_nM: 250,
+             max_hairpin_tm: 40, max_self_any_tm: 45, max_self_end_tm: 35,
+             max_dimer_tm: 45}
+
+# --- Inner pair: the presence/absence probe (inside the ORF) -----------------
+# Both primers sit inside the deleted region, so they give a band in wild type
+# and NO product in the knockout.
+inner:
+  style:             "whole_orf_span"   # near-terminal primers spanning the ORF
+  max_end_window_bp: 80                 # how far in from each ORF end to search
+  min_coverage_frac: 0.80               # warn below this fraction of the ORF
+
+# --- Outer pair: the size-shift pair (in the constant flanks) ----------------
+# Both primers sit outside the deleted region, so they always amplify and the
+# product size shifts by (cassette length - ORF length).
+outer:
+  product_margin: {min: 60, opt: 150, max: 300}   # bp added to the ORF length
+  min_shift_bp:   150         # warn when |shift| is below this (bands too close)
+
+# --- Optional cassette (kanamycin) control -----------------------------------
+# A primer reading outward from inside the cassette, paired with the outer primer
+# in the matching flank: amplifies ONLY in the knockout, so it is a positive
+# control for the insertion itself. Disable with --no-control.
+control:
+  enabled:  true
+  name:     "kan-inner-F"
+  sequence: "CATACGCTTGATCCGGCTAC"      # within aphA1, reading out toward FRT/P1
